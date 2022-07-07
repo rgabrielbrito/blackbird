@@ -3,7 +3,7 @@ pub struct Network {
 }
 
 struct Layer {
-    _neurons: Vec<Neuron>,
+    neurons: Vec<Neuron>,
 }
 
 struct Neuron {
@@ -20,7 +20,16 @@ impl Network {
 }
 
 impl Layer {
-    fn propagate(&self, _inputs: Vec<f32>) -> Vec<f32> {
+    fn propagate(&self, inputs: Vec<f32>) -> Vec<f32> {
+        self.neurons
+            .iter()
+            .map(|neuron| neuron.propagate(&inputs))
+            .collect()
+    }
+}
+
+impl Neuron {
+    fn propagate(&self, _inputs: &[f32]) -> f32 {
         todo!()
     }
 }
