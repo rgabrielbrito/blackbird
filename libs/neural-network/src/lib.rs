@@ -1,3 +1,5 @@
+use rand::Rng;
+
 pub struct Network {
     layers: Vec<Layer>,
 }
@@ -16,10 +18,6 @@ struct Neuron {
 }
 
 impl Network {
-    pub fn new(layers: Vec<Layer>) -> Self {
-        Self { layers }
-    }
-
     pub fn random(layers: &[LayerTopology]) -> Self {
         assert!(layers.len() > 1);
 
@@ -39,6 +37,14 @@ impl Network {
 }
 
 impl Layer {
+    pub fn random(input_neurons: usize, output_neurons: usize) -> Self {
+        let neurons = (0..output_neurons)
+            .map(|_| Neuron::random(input_neurons))
+            .collect();
+
+        Self { neurons }
+    }
+
     fn propagate(&self, inputs: Vec<f32>) -> Vec<f32> {
         self.neurons
             .iter()
@@ -48,6 +54,18 @@ impl Layer {
 }
 
 impl Neuron {
+    pub fn random(output_size: usize) -> Self {
+        let mut rng = rand::thread_rng();
+
+        let bias = rng.gen_range(-1.0..=1.0);
+
+        let weights = (0..output_size)
+            .map(|_| rng.gen_range(-1.0..=1.0))
+            .collect();
+
+        Self { bias, weights }
+    }
+
     fn propagate(&self, inputs: &[f32]) -> f32 {
         assert_eq!(inputs.len(), self.weights.len());
 
