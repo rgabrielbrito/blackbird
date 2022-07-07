@@ -30,6 +30,8 @@ impl Layer {
 
 impl Neuron {
     fn propagate(&self, inputs: &[f32]) -> f32 {
+        assert_eq!(inputs.len(), self.weights.len());
+
         let output = inputs
             .iter()
             .zip(&self.weights)
