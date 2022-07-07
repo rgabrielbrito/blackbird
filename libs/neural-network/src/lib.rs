@@ -7,8 +7,8 @@ struct Layer {
 }
 
 struct Neuron {
-    _bias: f32,
-    _weights: Vec<f32>,
+    bias: f32,
+    weights: Vec<f32>,
 }
 
 impl Network {
@@ -29,7 +29,13 @@ impl Layer {
 }
 
 impl Neuron {
-    fn propagate(&self, _inputs: &[f32]) -> f32 {
-        todo!()
+    fn propagate(&self, inputs: &[f32]) -> f32 {
+        let output = inputs
+            .iter()
+            .zip(&self.weights)
+            .map(|(input, weight)| input * weight)
+            .sum::<f32>();
+
+        (self.bias + output).max(0.0)
     }
 }
