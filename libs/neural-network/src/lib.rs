@@ -170,19 +170,12 @@ mod tests {
         #[test]
         fn layer_propagate() {
             let input = vec![0.5, 1.0];
-            let mut neurons = Vec::with_capacity(1);
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
 
-            let neuron = Neuron {
-                bias: 0.3,
-                weights: vec![-0.5, 0.2],
-            };
+            let layer = Layer::random(&mut rng, 2, 1);
+            let output = layer.propagate(input);
 
-            neurons.push(neuron);
-
-            let layer = Layer { neurons };
-            let propagated_values = layer.propagate(input);
-
-            approx::assert_relative_eq!(propagated_values.as_slice(), [0.25].as_ref());
+            approx::assert_relative_eq!(output.as_slice(), [0.5295272].as_ref());
         }
 
         #[test]
