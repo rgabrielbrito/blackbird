@@ -91,7 +91,7 @@ mod tests {
         use rand_chacha::ChaCha8Rng;
 
         #[test]
-        fn test() {
+        fn neuron_random() {
             let mut rng = ChaCha8Rng::from_seed(Default::default());
             let neuron = Neuron::random(&mut rng, 4);
 
@@ -108,7 +108,7 @@ mod tests {
         use super::*;
 
         #[test]
-        fn test() {
+        fn neuron_propagate() {
             let neuron = Neuron {
                 bias: 0.5,
                 weights: vec![-0.3, 0.8],
