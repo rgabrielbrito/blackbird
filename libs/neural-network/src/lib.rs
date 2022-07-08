@@ -99,7 +99,7 @@ mod tests {
 
             approx::assert_relative_eq!(
                 neuron.weights.as_slice(),
-                [0.67383957, 0.8181262, 0.26284897, 0.5238807,].as_ref()
+                [0.67383957, 0.8181262, 0.26284897, 0.5238807,].as_ref(),
             );
         }
 
@@ -140,6 +140,24 @@ mod tests {
                 neuron.propagate(&[0.5, 1.0]),
                 (-0.3 * 0.5) + (0.8 * 1.0) + 0.5,
             );
+        }
+
+        #[test]
+        fn layer_propagate() {
+            let input = vec![0.5, 1.0];
+            let mut neurons = Vec::with_capacity(1);
+
+            let neuron = Neuron {
+                bias: 0.3,
+                weights: vec![-0.5, 0.2],
+            };
+
+            neurons.push(neuron);
+
+            let layer = Layer { neurons };
+            let propagated_values = layer.propagate(input);
+
+            approx::assert_relative_eq!(propagated_values.as_slice(), [0.25].as_ref());
         }
     }
 }
