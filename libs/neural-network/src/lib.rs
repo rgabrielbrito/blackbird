@@ -118,6 +118,33 @@ mod tests {
                 [0.67383957, 0.8181262].as_ref(),
             );
         }
+
+        #[test]
+        fn network_random() {
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+
+            let topology_one = LayerTopology { neurons: 2 };
+
+            let topology_two = LayerTopology { neurons: 1 };
+
+            let mut layers = Vec::with_capacity(2);
+
+            layers.push(topology_one);
+            layers.push(topology_two);
+
+            let network = Network::random(&mut rng, &layers);
+
+            assert_eq!(network.layers.len(), 1);
+            assert_eq!(network.layers[0].neurons.len(), 1);
+
+            let neuron = &network.layers[0].neurons[0];
+
+            approx::assert_relative_eq!(neuron.bias, -0.6255188);
+            approx::assert_relative_eq!(
+                neuron.weights.as_slice(),
+                [0.67383957, 0.8181262].as_ref(),
+            );
+        }
     }
 
     mod propagate {
@@ -155,5 +182,8 @@ mod tests {
 
             approx::assert_relative_eq!(propagated_values.as_slice(), [0.25].as_ref());
         }
+
+        #[test]
+        fn network_propagate() {}
     }
 }
