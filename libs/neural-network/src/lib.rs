@@ -149,6 +149,8 @@ mod tests {
 
     mod propagate {
         use super::*;
+        use rand::SeedableRng;
+        use rand_chacha::ChaCha8Rng;
 
         #[test]
         fn neuron_propagate() {
@@ -184,6 +186,22 @@ mod tests {
         }
 
         #[test]
-        fn network_propagate() {}
+        fn network_propagate() {
+            let input = vec![0.5, 1.0];
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+
+            let top_one = LayerTopology { neurons: 2 };
+            let top_two = LayerTopology { neurons: 1 };
+
+            let mut layers = Vec::with_capacity(2);
+
+            layers.push(top_one);
+            layers.push(top_two);
+
+            let network = Network::random(&mut rng, &layers);
+            let output = network.propagate(input);
+
+            approx::assert_relative_eq!(output.as_slice(), [0.5295272].as_ref());
+        }
     }
 }
