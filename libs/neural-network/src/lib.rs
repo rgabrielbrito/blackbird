@@ -124,7 +124,6 @@ mod tests {
             let mut rng = ChaCha8Rng::from_seed(Default::default());
 
             let topology_one = LayerTopology { neurons: 2 };
-
             let topology_two = LayerTopology { neurons: 1 };
 
             let mut layers = Vec::with_capacity(2);
