@@ -105,21 +105,17 @@ mod tests {
 
         #[test]
         fn layer_random() {
-            let mut rng_one = ChaCha8Rng::from_seed(Default::default());
-            let mut rng_two = ChaCha8Rng::from_seed(Default::default());
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+            let layer = Layer::random(&mut rng, 2, 1);
 
-            let layer_one = Layer::random(&mut rng_one, 2, 1);
-            let layer_two = Layer::random(&mut rng_two, 2, 1);
+            assert_eq!(layer.neurons.len(), 1);
 
-            assert_eq!(layer_one.neurons.len(), layer_two.neurons.len());
+            let neuron = &layer.neurons[0];
 
-            let neuron_one = &layer_one.neurons[0];
-            let neuron_two = &layer_two.neurons[0];
-
-            approx::assert_relative_eq!(neuron_one.bias, neuron_two.bias);
+            approx::assert_relative_eq!(neuron.bias, -0.6255188);
             approx::assert_relative_eq!(
-                neuron_one.weights.as_slice(),
-                neuron_two.weights.as_slice()
+                neuron.weights.as_slice(),
+                [0.67383957, 0.8181262].as_ref(),
             );
         }
     }
