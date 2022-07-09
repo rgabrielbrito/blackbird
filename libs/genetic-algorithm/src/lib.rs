@@ -1,7 +1,15 @@
+use rand::RngCore;
+
 pub struct GeneticAlgorithm;
 
 pub trait Individual {
     fn fitness(&self) -> f32;
+}
+
+pub trait SelectionMethod {
+    fn select<'a, I>(&self, rng: &mut dyn RngCore, population: &'a [I]) -> &'a I
+    where
+        I: Individual;
 }
 
 impl GeneticAlgorithm {
