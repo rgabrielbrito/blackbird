@@ -9,12 +9,6 @@ pub trait Individual {
     fn fitness(&self) -> f32;
 }
 
-#[cfg(test)]
-#[derive(Clone, Debug)]
-pub struct TestIndividual {
-    fitness: f32,
-}
-
 pub trait SelectionMethod {
     fn select<'a, I>(&self, rng: &mut dyn RngCore, population: &'a [I]) -> &'a I
     where
@@ -23,6 +17,17 @@ pub trait SelectionMethod {
 
 #[derive(Clone, Debug, Default)]
 pub struct RouletteWheelSelection;
+
+#[derive(Clone, Debug)]
+pub struct Chromosome {
+    genes: Vec<f32>,
+}
+
+#[cfg(test)]
+#[derive(Clone, Debug)]
+pub struct TestIndividual {
+    fitness: f32,
+}
 
 impl<S> GeneticAlgorithm<S>
 where
@@ -54,6 +59,20 @@ impl SelectionMethod for RouletteWheelSelection {
         population
             .choose_weighted(rng, |individual| individual.fitness())
             .expect("got an empty population")
+    }
+}
+
+impl Chromosome {
+    pub fn len(&self) -> usize {
+        self.genes.len()
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = &f32> {
+        self.genes.iter()
+    }
+
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut f32> {
+        self.genes.iter_mut()
     }
 }
 
@@ -105,5 +124,55 @@ mod test {
         };
 
         assert_eq!(actual_histogram, expected_histogram);
+    }
+
+    fn chromosome() -> Chromosome {
+        Chromosome {
+            genes: vec![3.0, 1.0, 2.0],
+        }
+    }
+
+    mod len {
+        use super::*;
+
+        #[test]
+        fn test() {
+            assert_eq!(chromosome().len(), 3);
+        }
+    }
+
+    mod iter {
+        use super::*;
+
+        #[test]
+        fn test() {
+            let chromosome = chromosome();
+            let genes: Vec<_> = chromosome.iter().collect();
+
+            assert_eq!(genes.len(), 3);
+            assert_eq!(genes[0], &3.0);
+            assert_eq!(genes[1], &1.0);
+            assert_eq!(genes[2], &2.0);
+        }
+    }
+
+    mod iter_mut {
+        use super::*;
+
+        #[test]
+        fn test() {
+            let mut chromosome = chromosome();
+
+            chromosome.iter_mut().for_each(|gene| {
+                *gene *= 10.0;
+            });
+
+            let genes: Vec<_> = chromosome.iter().collect();
+
+            assert_eq!(genes.len(), 3);
+            assert_eq!(genes[0], &30.0);
+            assert_eq!(genes[1], &10.0);
+            assert_eq!(genes[2], &20.0);
+        }
     }
 }
