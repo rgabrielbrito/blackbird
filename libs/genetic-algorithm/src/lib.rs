@@ -31,11 +31,21 @@ pub trait CrossoverMethod {
     ) -> Chromosome;
 }
 
+pub trait MutationMethod {
+    fn mutate(&self, rng: &mut dyn RngCore, child: &mut Chromosome);
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct RouletteWheelSelection;
 
 #[derive(Clone, Debug, Default)]
 pub struct UniformCrossover;
+
+#[derive(Clone, Debug)]
+pub struct GaussianMutation {
+    chance: f32,
+    coeff: f32,
+}
 
 #[derive(Clone, Debug)]
 pub struct Chromosome {
@@ -105,6 +115,25 @@ impl CrossoverMethod for UniformCrossover {
             .zip(parent_b)
             .map(|(&a, &b)| if rng.gen_bool(0.5) { a } else { b })
             .collect()
+    }
+}
+
+impl GaussianMutation {
+    pub fn new(chance: f32, coeff: f32) -> Self {
+        assert!((0.0..=1.0).contains(&chance));
+        Self { chance, coeff }
+    }
+}
+
+impl MutationMethod for GaussianMutation {
+    fn mutate(&self, rng: &mut dyn RngCore, child: &mut Chromosome) {
+        for gene in child.iter_mut() {
+            let sign = if rng.gen_bool(0.5) { -1.0 } else { 1.0 };
+
+            if rng.gen_bool(self.chance as _) {
+                *gene += sign * self.coeff * rng.gen::<f32>();
+            }
+        }
     }
 }
 
