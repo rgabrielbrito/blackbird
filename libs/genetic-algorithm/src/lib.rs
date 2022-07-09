@@ -1,8 +1,9 @@
 use rand::seq::SliceRandom;
 use rand::RngCore;
 
-#[derive(Clone, Debug, Default)]
-pub struct GeneticAlgorithm;
+pub struct GeneticAlgorithm<S> {
+    selection_method: S,
+}
 
 pub trait Individual {
     fn fitness(&self) -> f32;
@@ -23,14 +24,25 @@ pub trait SelectionMethod {
 #[derive(Clone, Debug, Default)]
 pub struct RouletteWheelSelection;
 
-impl GeneticAlgorithm {
-    pub fn evolve<I>(&self, population: &[I]) -> Vec<I>
+impl<S> GeneticAlgorithm<S>
+where
+    S: SelectionMethod,
+{
+    pub fn evolve<I>(&self, rng: &mut dyn RngCore, population: &[I]) -> Vec<I>
     where
         I: Individual,
     {
         assert!(!population.is_empty());
 
-        (0..population.len()).map(|_| todo!()).collect()
+        (0..population.len())
+            .map(|_| {
+                let parent_one = self.selection_method.select(rng, population);
+
+                let parent_two = self.selection_method.select(rng, population);
+
+                todo!()
+            })
+            .collect()
     }
 }
 
