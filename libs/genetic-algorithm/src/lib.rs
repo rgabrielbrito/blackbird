@@ -1,6 +1,7 @@
 #![feature(min_type_alias_impl_trait)]
 
 use rand::seq::SliceRandom;
+use rand::Rng;
 use rand::RngCore;
 use std::iter::FromIterator;
 use std::ops::Index;
@@ -20,8 +21,20 @@ pub trait SelectionMethod {
         I: Individual;
 }
 
+pub trait CrossoverMethod {
+    fn crossover(
+        &self,
+        rng: &mut dyn RngCore,
+        parent_a: &Chromosome,
+        parent_b: &Chromosome,
+    ) -> Chromosome;
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct RouletteWheelSelection;
+
+#[derive(Clone, Debug, Default)]
+pub struct UniformCrossover;
 
 #[derive(Clone, Debug)]
 pub struct Chromosome {
@@ -46,9 +59,9 @@ where
 
         (0..population.len())
             .map(|_| {
-                let _parent_one = self.selection_method.select(rng, population).chromosome();
+                let _parent_a = self.selection_method.select(rng, population).chromosome();
 
-                let _parent_two = self.selection_method.select(rng, population).chromosome();
+                let _parent_b = self.selection_method.select(rng, population).chromosome();
 
                 todo!()
             })
@@ -64,6 +77,25 @@ impl SelectionMethod for RouletteWheelSelection {
         population
             .choose_weighted(rng, |individual| individual.fitness())
             .expect("got an empty population")
+    }
+}
+
+impl CrossoverMethod for UniformCrossover {
+    fn crossover(
+        &self,
+        rng: &mut dyn RngCore,
+        parent_a: &Chromosome,
+        parent_b: &Chromosome,
+    ) -> Chromosome {
+        assert_eq!(parent_a.len(), parent_b.len());
+
+        let parent_a = parent_a.iter();
+        let parent_b = parent_b.iter();
+
+        parent_a
+            .zip(parent_b)
+            .map(|(&a, &b)| if rng.gen_bool(0.5) { a } else { b })
+            .collect()
     }
 }
 
