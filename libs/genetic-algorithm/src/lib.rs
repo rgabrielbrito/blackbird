@@ -15,6 +15,7 @@ pub struct GeneticAlgorithm<S> {
 pub trait Individual {
     fn fitness(&self) -> f32;
     fn chromosome(&self) -> &Chromosome;
+    fn create(chromosome: Chromosome) -> Self;
 }
 
 pub trait SelectionMethod {
@@ -54,9 +55,10 @@ pub struct Chromosome {
 }
 
 #[cfg(test)]
-#[derive(Clone, Debug)]
-pub struct TestIndividual {
-    fitness: f32,
+#[derive(Clone, Debug, PartialEq)]
+pub enum TestIndividual {
+    WithChromosome { chromosome: Chromosome },
+    WithFitness { fitness: f32 },
 }
 
 impl<S> GeneticAlgorithm<S>
@@ -91,7 +93,7 @@ where
 
                 self.mutation_method.mutate(rng, &mut child);
 
-                todo!()
+                I::create(child)
             })
             .collect()
     }
@@ -187,20 +189,39 @@ impl IntoIterator for Chromosome {
 }
 
 #[cfg(test)]
+impl PartialEq for Chromosome {
+    fn eq(&self, other: &Self) -> bool {
+        approx::relative_eq!(self.genes.as_slice(), other.genes.as_slice(),)
+    }
+}
+
+#[cfg(test)]
 impl TestIndividual {
     pub fn new(fitness: f32) -> Self {
-        Self { fitness }
+        Self::WithFitness { fitness }
     }
 }
 
 #[cfg(test)]
 impl Individual for TestIndividual {
     fn fitness(&self) -> f32 {
-        self.fitness
+        match self {
+            Self::WithChromosome { chromosome } => chromosome.iter().sum(),
+            Self::WithFitness { fitness } => *fitness,
+        }
     }
 
     fn chromosome(&self) -> &Chromosome {
-        panic!("not supported for TestIndividual")
+        match self {
+            Self::WithChromosome { chromosome } => chromosome,
+            Self::WithFitness { .. } => {
+                panic!("not supported for TestIndividual::WithFitness")
+            }
+        }
+    }
+
+    fn create(chromosome: Chromosome) -> Self {
+        Self::WithChromosome { chromosome }
     }
 }
 
@@ -451,5 +472,43 @@ mod test {
                 approx::assert_relative_eq!(actual.as_slice(), expected.as_slice(),);
             }
         }
+    }
+
+    fn individual(genes: &[f32]) -> TestIndividual {
+        let chromosome = genes.iter().cloned().collect();
+
+        TestIndividual::create(chromosome)
+    }
+
+    #[allow(clippy::excessive_precision)]
+    #[test]
+    fn run_genetic_algorithm() {
+        let mut rng = ChaCha8Rng::from_seed(Default::default());
+
+        let ga = GeneticAlgorithm::new(
+            RouletteWheelSelection::default(),
+            UniformCrossover::default(),
+            GaussianMutation::new(0.5, 0.5),
+        );
+
+        let mut population = vec![
+            individual(&[0.0, 0.0, 0.0]),
+            individual(&[1.0, 1.0, 1.0]),
+            individual(&[1.0, 2.0, 1.0]),
+            individual(&[1.0, 2.0, 4.0]),
+        ];
+
+        for _ in 0..10 {
+            population = ga.evolve(&mut rng, &population);
+        }
+
+        let expected_population = vec![
+            individual(&[0.44769490, 2.0648358, 4.3058133]),
+            individual(&[1.21268670, 1.5538777, 2.8869110]),
+            individual(&[1.06176780, 2.2657390, 4.4287640]),
+            individual(&[0.95909685, 2.4618788, 4.0247330]),
+        ];
+
+        assert_eq!(population, expected_population);
     }
 }
