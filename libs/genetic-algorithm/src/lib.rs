@@ -9,6 +9,7 @@ use std::ops::Index;
 pub struct GeneticAlgorithm<S> {
     selection_method: S,
     crossover_method: Box<dyn CrossoverMethod>,
+    mutation_method: Box<dyn MutationMethod>,
 }
 
 pub trait Individual {
@@ -62,12 +63,18 @@ impl<S> GeneticAlgorithm<S>
 where
     S: SelectionMethod,
 {
-    pub fn new(selection_method: S, crossover_method: impl CrossoverMethod + 'static) -> Self {
+    pub fn new(
+        selection_method: S,
+        crossover_method: impl CrossoverMethod + 'static,
+        mutation_method: impl MutationMethod + 'static,
+    ) -> Self {
         Self {
             selection_method,
             crossover_method: Box::new(crossover_method),
+            mutation_method: Box::new(mutation_method),
         }
     }
+
     pub fn evolve<I>(&self, rng: &mut dyn RngCore, population: &[I]) -> Vec<I>
     where
         I: Individual,
@@ -80,7 +87,9 @@ where
 
                 let parent_b = self.selection_method.select(rng, population).chromosome();
 
-                let mut _child = self.crossover_method.crossover(rng, parent_a, parent_b);
+                let mut child = self.crossover_method.crossover(rng, parent_a, parent_b);
+
+                self.mutation_method.mutate(rng, &mut child);
 
                 todo!()
             })
