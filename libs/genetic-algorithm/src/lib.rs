@@ -11,6 +11,7 @@ pub struct GeneticAlgorithm<S> {
 
 pub trait Individual {
     fn fitness(&self) -> f32;
+    fn chromosome(&self) -> &Chromosome;
 }
 
 pub trait SelectionMethod {
@@ -45,9 +46,9 @@ where
 
         (0..population.len())
             .map(|_| {
-                let _parent_one = self.selection_method.select(rng, population);
+                let _parent_one = self.selection_method.select(rng, population).chromosome();
 
-                let _parent_two = self.selection_method.select(rng, population);
+                let _parent_two = self.selection_method.select(rng, population).chromosome();
 
                 todo!()
             })
@@ -117,6 +118,10 @@ impl TestIndividual {
 impl Individual for TestIndividual {
     fn fitness(&self) -> f32 {
         self.fitness
+    }
+
+    fn chromosome(&self) -> &Chromosome {
+        panic!("not supported for TestIndividual")
     }
 }
 
