@@ -1,5 +1,3 @@
-#![feature(min_type_alias_impl_trait)]
-
 use rand::seq::SliceRandom;
 use rand::Rng;
 use rand::RngCore;
@@ -181,7 +179,7 @@ impl FromIterator<f32> for Chromosome {
 
 impl IntoIterator for Chromosome {
     type Item = f32;
-    type IntoIter = impl Iterator<Item = f32>;
+    type IntoIter = std::vec::IntoIter<f32>;
 
     fn into_iter(self) -> Self::IntoIter {
         self.genes.into_iter()
