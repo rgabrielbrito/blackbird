@@ -9,6 +9,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 rand = "0.8"
-wasm-bindgen = "0.2"
+wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 blackbird-simulation = { path = "../simulation" }
 getrandom = { version = "0.2", features = ["js"] }
+serde = { version = "1.0", features = ["derive"] }
