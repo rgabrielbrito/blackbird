@@ -8,4 +8,7 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
+rand = "0.8"
 wasm-bindgen = "0.2"
+blackbird-simulation = { path = "../simulation" }
+getrandom = { version = "0.2", features = ["js"] }
