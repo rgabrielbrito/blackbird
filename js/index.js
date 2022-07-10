@@ -1,15 +1,31 @@
 import * as sim from "blackbird-simulation-wasm";
 
-CanvasRenderingContext2D.prototype.drawTriangle = function (x, y, size) {
-    this.beginPath();
-    this.moveTo(x, y);
-    this.lineTo(x + size, y + size);
-    this.lineTo(x - size, y + size);
-    this.lineTo(x, y);
+CanvasRenderingContext2D.prototype.drawTriangle =
+    function (x, y, size, rotation) {
+        this.beginPath();
 
-    this.fillStyle = 'rgb(0, 0, 0)';
-    this.fill();
-};
+        this.moveTo(
+            x + Math.cos(rotation) * size * 1.5,
+            y + Math.sin(rotation) * size * 1.5,
+        );
+
+        this.lineTo(
+            x + Math.cos(rotation + 2.0 / 3.0 * Math.PI) * size,
+            y + Math.sin(rotation + 2.0 / 3.0 * Math.PI) * size,
+        );
+
+        this.lineTo(
+            x + Math.cos(rotation + 4.0 / 3.0 * Math.PI) * size,
+            y + Math.sin(rotation + 4.0 / 3.0 * Math.PI) * size,
+        );
+
+        this.lineTo(
+            x + Math.cos(rotation) * size * 1.5,
+            y + Math.sin(rotation) * size * 1.5,
+        );
+
+        this.stroke();
+    };
 
 const simulation = new sim.Simulation();
 const world = simulation.world();
@@ -34,5 +50,6 @@ for (const animal of simulation.world().animals) {
         animal.x * viewportWidth,
         animal.y * viewportHeight,
         0.015 * viewportWidth,
+        animal.rotation,
     );
 }
