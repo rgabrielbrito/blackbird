@@ -1,6 +1,7 @@
-pub use self::{animal::*, food::*, world::*};
+pub use self::{animal::*, eye::*, food::*, world::*};
 
 mod animal;
+mod eye;
 mod food;
 mod world;
 
