@@ -9,7 +9,7 @@ impl AnimalIndividual {
     pub fn from_animal(animal: &Animal) -> Self {
         Self {
             fitness: animal.satiation as f32,
-            chromosome: todo!(),
+            chromosome: animal.as_chromosome(),
         }
     }
 
