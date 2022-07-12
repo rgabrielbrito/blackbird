@@ -58,6 +58,7 @@ impl Simulation {
                 let distance = na::distance(&animal.position, &food.position);
 
                 if distance <= 0.01 {
+                    animal.satiation += 1;
                     food.position = rng.gen();
                 }
             }
