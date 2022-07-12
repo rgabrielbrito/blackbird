@@ -68,7 +68,7 @@ CanvasRenderingContext2D.prototype.drawCircle =
 const simulation = new sim.Simulation();
 
 document.getElementById('train').onclick = function () {
-    simulation.train();
+    console.log(simulation.train());
 };
 
 const viewport = document.getElementById('viewport');
