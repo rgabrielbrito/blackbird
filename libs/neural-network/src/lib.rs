@@ -48,6 +48,23 @@ impl Network {
             .flat_map(|neuron| once(&neuron.bias).chain(&neuron.weights))
             .cloned()
     }
+
+    pub fn from_weights(layers: &[LayerTopology], weights: impl IntoIterator<Item = f32>) -> Self {
+        assert!(layers.len() > 1);
+
+        let mut weights = weights.into_iter();
+
+        let layers = layers
+            .windows(2)
+            .map(|layers| Layer::from_weights(layers[0].neurons, layers[1].neurons, &mut weights))
+            .collect();
+
+        if weights.next().is_some() {
+            panic!("Too many weights");
+        }
+
+        Self { layers }
+    }
 }
 
 impl Layer {
@@ -68,6 +85,18 @@ impl Layer {
             .iter()
             .map(|neuron| neuron.propagate(&inputs))
             .collect()
+    }
+
+    pub fn from_weights(
+        input_size: usize,
+        output_size: usize,
+        weights: &mut dyn Iterator<Item = f32>,
+    ) -> Self {
+        let neurons = (0..output_size)
+            .map(|_| Neuron::from_weights(input_size, weights))
+            .collect();
+
+        Self { neurons }
     }
 }
 
@@ -92,6 +121,16 @@ impl Neuron {
             .sum::<f32>();
 
         (self.bias + output).max(0.0)
+    }
+
+    pub fn from_weights(output_neurons: usize, weights: &mut dyn Iterator<Item = f32>) -> Self {
+        let bias = weights.next().expect("Not enough weights");
+
+        let weights = (0..output_neurons)
+            .map(|_| weights.next().expect("Not enough weights"))
+            .collect();
+
+        Self { bias, weights }
     }
 }
 
