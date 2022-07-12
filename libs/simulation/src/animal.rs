@@ -17,6 +17,12 @@ impl Animal {
         Self::new(eye, brain, rng)
     }
 
+    pub(crate) fn from_chromosome(chromosome: ga::Chromosome, rng: &mut dyn RngCore) -> Self {
+        let eye = Eye::default();
+        let brain = Brain::from_chromosome(chromosome, &eye);
+        Self::new(eye, brain, rng)
+    }
+
     pub(crate) fn as_chromosome(&self) -> ga::Chromosome {
         self.brain.as_chromosome()
     }
