@@ -46,6 +46,10 @@ impl Simulation {
     pub fn step(&mut self) {
         self.sim.step(&mut self.rng);
     }
+
+    pub fn train(&mut self) {
+        self.sim.train(&mut self.rng);
+    }
 }
 
 impl Default for Simulation {
