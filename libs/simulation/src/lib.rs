@@ -6,6 +6,7 @@ mod eye;
 mod food;
 mod world;
 
+use self::animal_individual::*;
 use blackbird_genetic_algorithm as ga;
 use blackbird_neural_network as nn;
 use nalgebra as na;
