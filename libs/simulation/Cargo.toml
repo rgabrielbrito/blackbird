@@ -9,6 +9,7 @@ edition = "2021"
 nalgebra = { version = "0.26", features = ["rand-no-std"] }
 rand = "0.8"
 blackbird-neural-network = { path = "../neural-network" }
+blackbird-genetic-algorithm = { path = "../genetic-algorithm" }
 
 [dev-dependencies]
 test-case = "1.1"
