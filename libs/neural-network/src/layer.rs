@@ -12,7 +12,14 @@ impl Layer {
         input_neurons: usize,
         output_neurons: usize,
     ) -> Self {
-        todo!()
+        let gen_rand_vec = |amount| (0..amount).map(|_| rng.gen_range(-1.0..=1.0)).collect();
+        let biases = gen_rand_vec(output_neurons);
+        let weights = gen_rand_vec(input_neurons * output_neurons);
+
+        let biases = na::DVector::from_vec(biases);
+        let weights = na::DMatrix::from_vec(input_neurons, output_neurons, weights);
+
+        Self { biases, weights }
     }
 
     pub fn propagate(&self, inputs: Vec<f32>) -> Vec<f32> {
