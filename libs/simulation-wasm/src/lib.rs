@@ -1,3 +1,9 @@
+pub use self::{animal::*, food::*, world::*};
+
+mod animal;
+mod food;
+mod world;
+
 use blackbird_simulation as sim;
 use rand::prelude::*;
 use serde::Serialize;
@@ -7,25 +13,6 @@ use wasm_bindgen::prelude::*;
 pub struct Simulation {
     rng: ThreadRng,
     sim: sim::Simulation,
-}
-
-#[derive(Clone, Debug, Serialize)]
-pub struct World {
-    pub animals: Vec<Animal>,
-    pub foods: Vec<Food>,
-}
-
-#[derive(Clone, Debug, Serialize)]
-pub struct Animal {
-    pub x: f32,
-    pub y: f32,
-    pub rotation: f32,
-}
-
-#[derive(Clone, Debug, Serialize)]
-pub struct Food {
-    pub x: f32,
-    pub y: f32,
 }
 
 #[wasm_bindgen]
@@ -62,33 +49,5 @@ impl Simulation {
 impl Default for Simulation {
     fn default() -> Self {
         Self::new()
-    }
-}
-
-impl From<&sim::World> for World {
-    fn from(world: &sim::World) -> Self {
-        let animals = world.animals().iter().map(Animal::from).collect();
-        let foods = world.foods().iter().map(Food::from).collect();
-
-        Self { animals, foods }
-    }
-}
-
-impl From<&sim::Animal> for Animal {
-    fn from(animal: &sim::Animal) -> Self {
-        Self {
-            x: animal.position().x,
-            y: animal.position().y,
-            rotation: animal.rotation().angle(),
-        }
-    }
-}
-
-impl From<&sim::Food> for Food {
-    fn from(food: &sim::Food) -> Self {
-        Self {
-            x: food.position().x,
-            y: food.position().y,
-        }
     }
 }
