@@ -1,12 +1,11 @@
 pub use self::layer_topology::*;
 
-use self::{layer::*, neuron::*};
+use self::layer::*;
 use rand::Rng;
 use std::iter::once;
 
 mod layer;
 mod layer_topology;
-mod neuron;
 
 #[derive(Debug)]
 pub struct Network {
