@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 rand = "0.8"
+nalgebra = "0.31"
 
 [dev-dependencies]
 approx = "0.4"
