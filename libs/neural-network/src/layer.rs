@@ -12,7 +12,7 @@ impl Layer {
         input_neurons: usize,
         output_neurons: usize,
     ) -> Self {
-        let gen_rand_vec = |amount| (0..amount).map(|_| rng.gen_range(-1.0..=1.0)).collect();
+        let mut gen_rand_vec = |amount| (0..amount).map(|_| rng.gen_range(-1.0..=1.0)).collect();
         let biases = gen_rand_vec(output_neurons);
         let weights = gen_rand_vec(input_neurons * output_neurons);
 
@@ -46,7 +46,14 @@ mod tests {
 
         #[test]
         fn layer_random() {
-            todo!()
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+            let layer = Layer::random(&mut rng, 2, 1);
+
+            let biases = vec![-0.6255188];
+            let weights = vec![0.67383957, 0.8181262];
+
+            approx::assert_relative_eq!(layer.biases.as_slice(), biases.as_ref());
+            approx::assert_relative_eq!(layer.weights.as_slice(), weights.as_ref());
         }
     }
 
