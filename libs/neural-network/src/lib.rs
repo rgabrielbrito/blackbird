@@ -3,7 +3,6 @@ pub use self::layer_topology::*;
 use self::layer::*;
 use nalgebra as na;
 use rand::Rng;
-use std::iter::once;
 
 mod layer;
 mod layer_topology;
@@ -34,8 +33,7 @@ impl Network {
     pub fn weights(&self) -> impl Iterator<Item = f32> + '_ {
         self.layers
             .iter()
-            .flat_map(|layer| layer.neurons.iter())
-            .flat_map(|neuron| once(&neuron.bias).chain(&neuron.weights))
+            .flat_map(|layer| layer.weights.into_iter())
             .cloned()
     }
 

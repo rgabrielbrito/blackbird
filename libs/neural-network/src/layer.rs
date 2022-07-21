@@ -22,10 +22,10 @@ impl Layer {
         Self { biases, weights }
     }
 
-    pub fn propagate(self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
+    pub fn propagate(&self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
         assert_eq!(inputs.len(), self.weights.len());
 
-        let mut output = inputs.transpose() * self.weights + self.biases;
+        let mut output = inputs.transpose() * &self.weights + &self.biases;
 
         output.iter_mut().for_each(|cell| {
             *cell = cell.max(0.0);
@@ -35,9 +35,9 @@ impl Layer {
     }
 
     pub fn from_weights(
-        input_size: usize,
-        output_size: usize,
-        weights: &mut dyn Iterator<Item = f32>,
+        _input_size: usize,
+        _output_size: usize,
+        _weights: &mut dyn Iterator<Item = f32>,
     ) -> Self {
         todo!()
     }
