@@ -22,7 +22,7 @@ impl Layer {
         Self { biases, weights }
     }
 
-    pub fn propagate(&self, inputs: Vec<f32>) -> Vec<f32> {
+    pub fn propagate(&self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
         todo!()
     }
 
