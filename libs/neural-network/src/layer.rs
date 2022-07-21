@@ -11,18 +11,11 @@ impl Layer {
         input_neurons: usize,
         output_neurons: usize,
     ) -> Self {
-        let neurons = (0..output_neurons)
-            .map(|_| Neuron::random(rng, input_neurons))
-            .collect();
-
-        Self { neurons }
+        todo!()
     }
 
     pub fn propagate(&self, inputs: Vec<f32>) -> Vec<f32> {
-        self.neurons
-            .iter()
-            .map(|neuron| neuron.propagate(&inputs))
-            .collect()
+        todo!()
     }
 
     pub fn from_weights(
@@ -30,11 +23,7 @@ impl Layer {
         output_size: usize,
         weights: &mut dyn Iterator<Item = f32>,
     ) -> Self {
-        let neurons = (0..output_size)
-            .map(|_| Neuron::from_weights(input_size, weights))
-            .collect();
-
-        Self { neurons }
+        todo!()
     }
 }
 
@@ -49,18 +38,7 @@ mod tests {
 
         #[test]
         fn layer_random() {
-            let mut rng = ChaCha8Rng::from_seed(Default::default());
-            let layer = Layer::random(&mut rng, 2, 1);
-
-            assert_eq!(layer.neurons.len(), 1);
-
-            let neuron = &layer.neurons[0];
-
-            approx::assert_relative_eq!(neuron.bias, -0.6255188);
-            approx::assert_relative_eq!(
-                neuron.weights.as_slice(),
-                [0.67383957, 0.8181262].as_ref(),
-            );
+            todo!()
         }
     }
 
@@ -71,13 +49,7 @@ mod tests {
 
         #[test]
         fn layer_propagate() {
-            let input = vec![0.5, 1.0];
-            let mut rng = ChaCha8Rng::from_seed(Default::default());
-
-            let layer = Layer::random(&mut rng, 2, 1);
-            let output = layer.propagate(input);
-
-            approx::assert_relative_eq!(output.as_slice(), [0.5295272].as_ref());
+            todo!()
         }
     }
 }

@@ -1,6 +1,7 @@
 pub use self::layer_topology::*;
 
 use self::layer::*;
+use nalgebra as na;
 use rand::Rng;
 use std::iter::once;
 
