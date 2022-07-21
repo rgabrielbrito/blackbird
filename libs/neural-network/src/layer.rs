@@ -2,7 +2,7 @@ use crate::*;
 
 #[derive(Clone, Debug)]
 pub struct Layer {
-    pub(crate) biases: na::DVector<f32>,
+    pub(crate) biases: na::DMatrix<f32>,
     pub(crate) weights: na::DMatrix<f32>,
 }
 
@@ -16,14 +16,15 @@ impl Layer {
         let biases = gen_rand_vec(output_neurons);
         let weights = gen_rand_vec(input_neurons * output_neurons);
 
-        let biases = na::DVector::from_vec(biases);
+        let biases = na::DMatrix::from_vec(1, output_neurons, biases);
         let weights = na::DMatrix::from_vec(input_neurons, output_neurons, weights);
 
         Self { biases, weights }
     }
 
-    pub fn propagate(&self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
-        todo!()
+    // TODO: NEEDS ACTIVATION FUNCTION
+    pub fn propagate(self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
+        (inputs * self.weights) + self.biases
     }
 
     pub fn from_weights(
