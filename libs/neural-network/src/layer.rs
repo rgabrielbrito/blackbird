@@ -22,13 +22,14 @@ impl Layer {
         Self { biases, weights }
     }
 
-    // TODO: NEEDS ACTIVATION FUNCTION
     pub fn propagate(self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
-        let mut output = inputs * self.weights + self.biases;
+        assert_eq!(inputs.len(), self.weights.len());
 
-        for cell in output.iter_mut() {
+        let mut output = inputs.transpose() * self.weights + self.biases;
+
+        output.iter_mut().for_each(|cell| {
             *cell = cell.max(0.0);
-        }
+        });
 
         output
     }
@@ -71,7 +72,15 @@ mod tests {
 
         #[test]
         fn layer_propagate() {
-            todo!()
+            let input = vec![0.5, 1.0];
+            let input = na::DMatrix::from_vec(2, 1, input);
+
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+            let layer = Layer::random(&mut rng, 2, 1);
+
+            let output = layer.propagate(input);
+
+            approx::assert_relative_eq!(output.as_slice(), [0.5295272].as_ref());
         }
     }
 }
