@@ -2,7 +2,8 @@ use crate::*;
 
 #[derive(Clone, Debug)]
 pub struct Layer {
-    pub(crate) neurons: Vec<Neuron>,
+    pub(crate) biases: na::DVector<f32>,
+    pub(crate) weights: na::DMatrix<f32>,
 }
 
 impl Layer {
