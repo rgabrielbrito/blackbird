@@ -24,7 +24,13 @@ impl Layer {
 
     // TODO: NEEDS ACTIVATION FUNCTION
     pub fn propagate(self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
-        (inputs * self.weights) + self.biases
+        let mut output = inputs * self.weights + self.biases;
+
+        for cell in output.iter_mut() {
+            *cell = cell.max(0.0);
+        }
+
+        output
     }
 
     pub fn from_weights(
