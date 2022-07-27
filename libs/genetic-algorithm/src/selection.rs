@@ -1,3 +1,4 @@
+pub use self::rank_selection::*;
 pub use self::roulette_wheel::*;
 
 use crate::*;
