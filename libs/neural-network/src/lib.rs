@@ -1,11 +1,12 @@
 pub use self::layer_topology::*;
 
-use self::layer::*;
-use nalgebra as na;
+use self::{layer::*, neuron::*};
 use rand::Rng;
+use std::iter::once;
 
 mod layer;
 mod layer_topology;
+mod neuron;
 
 #[derive(Debug)]
 pub struct Network {
@@ -24,7 +25,7 @@ impl Network {
         Self { layers }
     }
 
-    pub fn propagate(&self, inputs: na::DMatrix<f32>) -> na::DMatrix<f32> {
+    pub fn propagate(&self, inputs: Vec<f32>) -> Vec<f32> {
         self.layers
             .iter()
             .fold(inputs, |inputs, layer| layer.propagate(inputs))
@@ -33,7 +34,8 @@ impl Network {
     pub fn weights(&self) -> impl Iterator<Item = f32> + '_ {
         self.layers
             .iter()
-            .flat_map(|layer| layer.weights.into_iter())
+            .flat_map(|layer| layer.neurons.iter())
+            .flat_map(|neuron| once(&neuron.bias).chain(&neuron.weights))
             .cloned()
     }
 
