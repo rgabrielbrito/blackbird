@@ -3,11 +3,6 @@ use crate::*;
 #[derive(Clone, Debug, Default)]
 pub struct RankSelection;
 
-// TODO: Write unit test to ensure that rank selection is working as intended. Remember,
-// rather than being based on fitness directly, rank selection assigns a rank to each
-// solution and uses that divided by the sum of the fitness to determine the probability
-// that any given individual is selected. This approach, in theory, avoids converging
-// towards a solution too early in the generations.
 impl SelectionMethod for RankSelection {
     fn select<'a, I>(&self, rng: &mut dyn RngCore, population: &'a [I]) -> &'a I
     where
