@@ -9,15 +9,9 @@ impl SelectionMethod for RankSelection {
         I: Individual,
     {
         let mut population: Vec<&I> = vec![population].into_iter().flatten().collect();
-
         population.sort_by(|i, j| i.fitness().partial_cmp(&j.fitness()).unwrap());
 
-        let mut ranks: Vec<usize> = Vec::with_capacity(population.len());
-
-        for i in 0..population.len() {
-            ranks.push(i + 1);
-        }
-
+        let ranks: Vec<usize> = (1..=population.len()).collect();
         let total_fitness: f32 = population
             .iter()
             .map(|individual| individual.fitness())
@@ -42,7 +36,7 @@ mod test {
     use std::collections::BTreeMap;
 
     #[test]
-    fn roulette_wheel_selection() {
+    fn rank_selection() {
         let method = RankSelection::default();
         let mut rng = ChaCha8Rng::from_seed(Default::default());
 
