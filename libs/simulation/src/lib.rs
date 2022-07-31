@@ -22,7 +22,7 @@ const GENERATION_LENGTH: usize = 2500;
 
 pub struct Simulation {
     world: World,
-    ga: ga::GeneticAlgorithm<ga::RouletteWheelSelection>,
+    ga: ga::GeneticAlgorithm<ga::RankSelection>,
     age: usize,
 }
 
@@ -31,7 +31,7 @@ impl Simulation {
         let world = World::random(rng);
 
         let ga = ga::GeneticAlgorithm::new(
-            ga::RouletteWheelSelection::default(),
+            ga::RankSelection::default(),
             ga::UniformCrossover::default(),
             ga::GaussianMutation::new(0.01, 0.3),
         );
