@@ -66,10 +66,10 @@ mod test {
             });
 
         let expected_histogram = maplit::btreemap! {
-            1 => 98,
-            2 => 202,
-            3 => 301,
-            4 => 399,
+            1 => 110,
+            2 => 206,
+            3 => 287,
+            4 => 397,
         };
 
         assert_eq!(actual_histogram, expected_histogram);
