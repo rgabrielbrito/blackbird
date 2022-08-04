@@ -2,6 +2,7 @@ pub use self::uniform::*;
 
 use crate::*;
 
+mod k_point;
 mod uniform;
 
 pub trait CrossoverMethod {
