@@ -27,3 +27,19 @@ impl CrossoverMethod for KPointCrossover {
         todo!()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rand::SeedableRng;
+    use rand_chacha::ChaCha8Rng;
+
+    #[test]
+    fn gen_k_points() {
+        let mut rng = ChaCha8Rng::from_seed(Default::default());
+        let crossover = KPointCrossover::default();
+
+        let k_points = crossover.generate_k_points(&mut rng, 5, 10);
+        assert_eq!(k_points.as_slice(), [1, 2, 2, 8, 9].as_ref());
+    }
+}
