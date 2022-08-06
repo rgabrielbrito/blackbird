@@ -2,6 +2,7 @@ pub use self::{
     chromosome::*, crossover::*, individual::*, mutation::*, selection::*, statistics::*,
 };
 
+use itertools::Itertools;
 use rand::seq::SliceRandom;
 use rand::{Rng, RngCore};
 

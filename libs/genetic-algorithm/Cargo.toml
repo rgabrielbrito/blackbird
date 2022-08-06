@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 rand = "0.8"
+itertools = "0.10.3"
 
 [dev-dependencies]
 rand_chacha = "0.3"
