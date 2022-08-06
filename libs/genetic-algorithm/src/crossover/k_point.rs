@@ -12,9 +12,10 @@ impl CrossoverMethod for KPointCrossover {
     fn crossover(
         &self,
         _rng: &mut dyn RngCore,
-        _parent_a: &Chromosome,
-        _parent_b: &Chromosome,
+        parent_a: &Chromosome,
+        parent_b: &Chromosome,
     ) -> Chromosome {
+        assert_eq!(parent_a.len(), parent_b.len());
         todo!()
     }
 }
