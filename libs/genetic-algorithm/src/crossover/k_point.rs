@@ -5,7 +5,9 @@ pub struct KPointCrossover;
 
 impl KPointCrossover {
     fn generate_k_points(&self, rng: &mut dyn RngCore, k: u32, chromosome_len: u32) -> Vec<u32> {
-        (0..k).map(|_| rng.gen_range(0..=chromosome_len)).collect()
+        let mut k_points: Vec<u32> = (0..k).map(|_| rng.gen_range(0..=chromosome_len)).collect();
+        k_points.sort();
+        k_points
     }
 }
 
