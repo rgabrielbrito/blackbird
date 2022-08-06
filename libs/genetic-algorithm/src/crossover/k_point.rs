@@ -5,9 +5,9 @@ pub struct KPointCrossover;
 
 impl KPointCrossover {
     fn generate_k_points(&self, rng: &mut dyn RngCore, k: u32, chromosome_len: u32) -> Vec<u32> {
-        let mut k_points: Vec<u32> = (0..k).map(|_| rng.gen_range(0..=chromosome_len)).collect();
-        k_points.sort();
-        k_points
+        Itertools::sorted((0..k).map(|_| rng.gen_range(0..=chromosome_len)))
+            .unique()
+            .collect()
     }
 }
 
@@ -40,6 +40,6 @@ mod tests {
         let crossover = KPointCrossover::default();
 
         let k_points = crossover.generate_k_points(&mut rng, 5, 10);
-        assert_eq!(k_points.as_slice(), [1, 2, 2, 8, 9].as_ref());
+        assert_eq!(k_points.as_slice(), [1, 2, 8, 9].as_ref());
     }
 }
