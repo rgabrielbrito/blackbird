@@ -4,7 +4,7 @@ use crate::*;
 pub struct KPointCrossover;
 
 impl KPointCrossover {
-    fn generate_k_points(&self, rng: &mut dyn RngCore) -> Vec<usize> {
+    fn generate_k_points(&self, rng: &mut dyn RngCore, k: u32) -> Vec<usize> {
         todo!()
     }
 }
