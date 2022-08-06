@@ -3,6 +3,12 @@ use crate::*;
 #[derive(Clone, Debug, Default)]
 pub struct KPointCrossover;
 
+impl KPointCrossover {
+    fn generate_k_points(&self, rng: &mut dyn RngCore) -> Vec<usize> {
+        todo!()
+    }
+}
+
 // Rather than iterating through every point and choosing
 // either parent_a's value or parent_b's value with equal probability,
 // K point crossover picks K crossover points at random and swaps them.
