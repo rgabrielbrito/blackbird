@@ -34,7 +34,7 @@ impl Index<Range<usize>> for Chromosome {
     type Output = [f32];
 
     fn index(&self, index: Range<usize>) -> &Self::Output {
-        todo!()
+        &self.genes[index]
     }
 }
 
