@@ -15,10 +15,10 @@ impl KPointCrossover {
             .collect()
     }
 
-    fn construct_chromosome_subsets(
-        &self,
+    fn construct_chromosome_subsets<'a>(
+        &'a self,
         rng: &mut dyn RngCore,
-        chromosome: &Chromosome,
+        chromosome: &'a Chromosome,
     ) -> Vec<&[f32]> {
         let len_of_chromosome = chromosome.len();
         let k = rng.gen_range(0..=len_of_chromosome);
