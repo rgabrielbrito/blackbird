@@ -19,11 +19,17 @@ impl KPointCrossover {
         &self,
         rng: &mut dyn RngCore,
         chromosome: &Chromosome,
-    ) -> Vec<Vec<f32>> {
+    ) -> Vec<&[f32]> {
         let len_of_chromosome = chromosome.len();
         let k = rng.gen_range(0..=len_of_chromosome);
         let k_points = self.generate_k_points(rng, k, len_of_chromosome);
-        todo!()
+        let mut subsets: Vec<&[f32]> = vec![];
+
+        for (prev, next) in k_points.iter().tuple_windows() {
+            subsets.push(&chromosome[*prev..*next]);
+        }
+
+        subsets
     }
 }
 

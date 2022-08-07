@@ -1,5 +1,6 @@
 use std::iter::FromIterator;
 use std::ops::Index;
+use std::ops::Range;
 
 #[derive(Clone, Debug)]
 pub struct Chromosome {
@@ -26,6 +27,14 @@ impl Index<usize> for Chromosome {
 
     fn index(&self, index: usize) -> &Self::Output {
         &self.genes[index]
+    }
+}
+
+impl Index<Range<usize>> for Chromosome {
+    type Output = [f32];
+
+    fn index(&self, index: Range<usize>) -> &Self::Output {
+        todo!()
     }
 }
 
