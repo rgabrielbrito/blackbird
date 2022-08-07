@@ -4,7 +4,12 @@ use crate::*;
 pub struct KPointCrossover;
 
 impl KPointCrossover {
-    fn generate_k_points(&self, rng: &mut dyn RngCore, k: u32, chromosome_len: u32) -> Vec<u32> {
+    fn generate_k_points(
+        &self,
+        rng: &mut dyn RngCore,
+        k: usize,
+        chromosome_len: usize,
+    ) -> Vec<usize> {
         Itertools::sorted((0..k).map(|_| rng.gen_range(0..=chromosome_len)))
             .unique()
             .collect()
@@ -15,6 +20,9 @@ impl KPointCrossover {
         rng: &mut dyn RngCore,
         chromosome: &Chromosome,
     ) -> Vec<Vec<f32>> {
+        let len_of_chromosome = chromosome.len();
+        let k = rng.gen_range(0..=len_of_chromosome);
+        let k_points = self.generate_k_points(rng, k, len_of_chromosome);
         todo!()
     }
 }
