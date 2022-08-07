@@ -9,6 +9,14 @@ impl KPointCrossover {
             .unique()
             .collect()
     }
+
+    fn construct_chromosome_subsets(
+        &self,
+        rng: &mut dyn RngCore,
+        chromosome: &Chromosome,
+    ) -> Vec<Vec<f32>> {
+        todo!()
+    }
 }
 
 // Rather than iterating through every point and choosing
