@@ -53,15 +53,36 @@ impl CrossoverMethod for KPointCrossover {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rand::SeedableRng;
-    use rand_chacha::ChaCha8Rng;
 
-    #[test]
-    fn gen_k_points() {
-        let mut rng = ChaCha8Rng::from_seed(Default::default());
-        let crossover = KPointCrossover::default();
+    mod k_points {
+        use super::*;
+        use rand::SeedableRng;
+        use rand_chacha::ChaCha8Rng;
 
-        let k_points = crossover.generate_k_points(&mut rng, 5, 10);
-        assert_eq!(k_points.as_slice(), [1, 2, 8, 9].as_ref());
+        #[test]
+        fn gen_k_points() {
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+            let crossover = KPointCrossover::default();
+
+            let k_points = crossover.generate_k_points(&mut rng, 5, 10);
+            assert_eq!(k_points.as_slice(), [0, 1, 2, 9].as_ref());
+        }
+    }
+
+    mod subsets {
+        use super::*;
+        use rand::SeedableRng;
+        use rand_chacha::ChaCha8Rng;
+
+        #[test]
+        fn create_chromosome_subsets() {
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+            let chromosome = Chromosome::new(vec![
+                1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0,
+            ]);
+            let crossover = KPointCrossover::default();
+            let subsets = crossover.construct_chromosome_subsets(&mut rng, &chromosome);
+            assert_eq!(subsets.as_slice(), [[]].as_ref());
+        }
     }
 }

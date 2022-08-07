@@ -9,6 +9,10 @@ pub struct Chromosome {
 
 #[allow(clippy::len_without_is_empty)]
 impl Chromosome {
+    pub fn new(genes: Vec<f32>) -> Self {
+        Self { genes }
+    }
+
     pub fn len(&self) -> usize {
         self.genes.len()
     }
