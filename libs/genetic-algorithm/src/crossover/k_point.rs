@@ -15,6 +15,12 @@ impl KPointCrossover {
             .collect()
     }
 
+    // For this function, you need to keep in mind that that k_points is not an exhaustive range
+    // So, not every element is intended to be swapped. For the ones not included in the range,
+    // you have to transfer the values as is. This is why the output of the test does not include
+    // every value that appears in the chromosome.
+    // Moreover, you should fix K, rather than using the random number generator. This will ensure
+    // that each subset of parent_a and parent_b will be the same length and, thus, swappable
     fn construct_chromosome_subsets<'a>(
         &'a self,
         rng: &mut dyn RngCore,
