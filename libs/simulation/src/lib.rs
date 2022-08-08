@@ -32,7 +32,7 @@ impl Simulation {
 
         let ga = ga::GeneticAlgorithm::new(
             ga::RankSelection::default(),
-            ga::UniformCrossover::default(),
+            ga::KPointCrossover::default(),
             ga::GaussianMutation::new(0.01, 0.3),
         );
 

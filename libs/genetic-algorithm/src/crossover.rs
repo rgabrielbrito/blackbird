@@ -1,3 +1,4 @@
+pub use self::k_point::*;
 pub use self::uniform::*;
 
 use crate::*;
