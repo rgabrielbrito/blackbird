@@ -5,6 +5,7 @@ pub use self::{
 use itertools::Itertools;
 use rand::seq::SliceRandom;
 use rand::{Rng, RngCore};
+use std::mem;
 
 mod chromosome;
 mod crossover;

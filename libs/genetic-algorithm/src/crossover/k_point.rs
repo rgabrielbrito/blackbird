@@ -19,12 +19,25 @@ impl KPointCrossover {
 impl CrossoverMethod for KPointCrossover {
     fn crossover(
         &self,
-        _rng: &mut dyn RngCore,
+        rng: &mut dyn RngCore,
         parent_a: &Chromosome,
         parent_b: &Chromosome,
     ) -> Chromosome {
         assert_eq!(parent_a.len(), parent_b.len());
-        todo!()
+
+        let k = parent_a.len() / 2;
+        let k_points = self.generate_k_points(rng, k, parent_a.len());
+
+        let mut parent_a: Vec<f32> = parent_a.clone().into_iter().collect();
+        let mut parent_b: Vec<f32> = parent_b.clone().into_iter().collect();
+
+        for (prev, next) in k_points.iter().tuple_windows() {
+            for curr in *prev..*next {
+                mem::swap(&mut parent_a[curr], &mut parent_b[curr]);
+            }
+        }
+
+        Chromosome::new(parent_a)
     }
 }
 
