@@ -53,7 +53,7 @@ CanvasRenderingContext2D.prototype.drawTriangle =
 
         this.stroke();
         
-        this.fillStyle = 'rgb(255, 255, 255)';
+        this.fillStyle = '#FFD7BA';
         this.fill();
     };
 
@@ -61,7 +61,7 @@ CanvasRenderingContext2D.prototype.drawCircle =
     function(x, y, radius) {
         this.beginPath();
         this.arc(x, y, radius, 0, 2.0 * Math.PI);
-        this.fillStyle = 'rgb(0, 255, 128)';
+        this.fillStyle = '#EB5E28';
         this.fill();
     };
 
