@@ -9,3 +9,15 @@ canvas {
     margin-left: 10%;
     margin-right: 10%;
 }
+
+button {
+    margin-top: 5%;
+    margin-left: 49%;
+    border: none;
+    font-size: 1.2rem;
+    height: 2.5rem;
+    width: 6rem;
+    background: #FFFCF2;
+    color: #403D39;
+    font-weight: 700;
+}
