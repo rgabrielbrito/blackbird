@@ -1,5 +1,6 @@
 use std::iter::FromIterator;
 use std::ops::Index;
+use std::ops::Range;
 
 #[derive(Clone, Debug)]
 pub struct Chromosome {
@@ -8,6 +9,10 @@ pub struct Chromosome {
 
 #[allow(clippy::len_without_is_empty)]
 impl Chromosome {
+    pub fn new(genes: Vec<f32>) -> Self {
+        Self { genes }
+    }
+
     pub fn len(&self) -> usize {
         self.genes.len()
     }
@@ -25,6 +30,14 @@ impl Index<usize> for Chromosome {
     type Output = f32;
 
     fn index(&self, index: usize) -> &Self::Output {
+        &self.genes[index]
+    }
+}
+
+impl Index<Range<usize>> for Chromosome {
+    type Output = [f32];
+
+    fn index(&self, index: Range<usize>) -> &Self::Output {
         &self.genes[index]
     }
 }
