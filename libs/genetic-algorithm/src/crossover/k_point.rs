@@ -59,4 +59,30 @@ mod tests {
             assert_eq!(k_points.as_slice(), [0, 1, 2, 9].as_ref());
         }
     }
+
+    mod crossover {
+        use super::*;
+        use rand::SeedableRng;
+        use rand_chacha::ChaCha8Rng;
+
+        #[test]
+        fn k_point_crossover() {
+            let mut rng = ChaCha8Rng::from_seed(Default::default());
+            let crossover = KPointCrossover::default();
+
+            let chromosome_a =
+                Chromosome::new(vec![1.0, 2.0, 3.0, 4.0, 5.0, 11.0, 12.0, 13.0, 14.0, 15.0]);
+
+            let chromosome_b =
+                Chromosome::new(vec![6.0, 7.0, 8.0, 9.0, 10.0, 16.0, 17.0, 18.0, 19.0, 20.0]);
+
+            let chromosome_c = crossover.crossover(&mut rng, &chromosome_a, &chromosome_b);
+            let genes: Vec<_> = chromosome_c.into_iter().collect();
+
+            assert_eq!(
+                genes.as_slice(),
+                [6.0, 7.0, 8.0, 9.0, 10.0, 16.0, 17.0, 18.0, 19.0, 15.0].as_ref()
+            );
+        }
+    }
 }
