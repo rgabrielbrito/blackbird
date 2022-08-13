@@ -4,9 +4,20 @@ A simulation of birds acquiring food across generations, enabled by neural netwo
 
 ![screenshot](./readme/blackbird.gif)
 
-The intent of this project was to learn about idiomatic Rust, the fundamentals of neural networks, and the concept of genetic algorithms. [Learning to Fly](https://pwy.io/en/posts/learning-to-fly-pt1), a tutorial created by Patryk Wychowaniec, details how this project was made.
+The intent of this project was to learn about the Rust programming language, the fundamentals of neural networks, 
+the concept of genetic algorithms, and web assembly. [Learning to Fly](https://pwy.io/en/posts/learning-to-fly-pt1), 
+a tutorial created by Patryk Wychowaniec, details how this project was made.
 
-To garner a bit more hands-on experience than the tutorial, I implemented Rank Selection, K-Point Crossover, unit tests for both methods, and altered the overall style of the web page.  
+In short, I implemented a neural network that predicts how a bird should rotate and how fast it should travel to
+get food. Then, I programmed genetic algorithms that maximize the amount of food birds gather. I combined the 
+neural network and genetic algorithms to simulate and train the birds across multiple generations. Lastly,
+I created web assembly bindings for the simulation so that it could be rendered in a web browser. 
+
+To garner a bit more hands-on experience, after the tutorial, I implemented rank selection, k-point crossover, 
+unit tests for both methods, and altered the overall style of the web page. Rank selection makes it so the neural
+network avoids prematurely selecting one bird as the most fit bird for multiple generations. 
+K-point crossover ensures that future birds retain similarities to their parent, without entirely duplicating how their parent behaved.
+Overall, it takes longer than the original implementation to converge, but it introduces more unique birds to the population.  
 
 # Building
 
