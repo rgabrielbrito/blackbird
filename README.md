@@ -1,17 +1,37 @@
-# Blackbird
-### Plan For READMEs
-The project was built by using cargo workspaces. Because of this, the functionality for the application
-has been separated into four crates, each of which support a different aspect of the simulation: the neural
-network, the genetic algorithm, the simulation code, and the simulation bindings for wasm. There is also the 
-javascript, where the functions are invoked. 
+# 🐦‍⬛ Blackbird
 
-Given this separation, I'm thinking of having five READMEs. The README for the root directory of the project is going to 
-be rather simple. It is going to contain explanations for what the project is, where the tutorial can be found, and the 
-build instructions.
+Simulation of evolution, powered by neural networks, genetic algorithms & high-school math:
 
-The other READMEs are going to provide descriptions for each of the crates. In this way, we're able to explain each of them
-in a standalone manner rather than adding all of the explanations at the root level. I might want to consider adding
-a README for the javascript as well, though it is more important for you to describe the Rust code and move on from there.
+![screenshot](./readme/blackbird.png)
 
-After you modify all of those, you probably want to add comments to the code. Don't overdo it, just explain snippets of code
-that are unclear.
+Feeling curious? I've described the implementation above on my blog: [Learning to Fly](https://pwy.io/en/posts/learning-to-fly-pt1).
+
+# Building
+
+## Using Cargo and npm
+
+```bash
+# 1/3: Clone the repository
+$ git clone https://github.com/patryk27/shorelark
+$ cd shorelark
+
+# 2/3: Compile Rust into WebAssembly
+$ cd libs/simulation-wasm
+$ wasm-pack build --release
+
+# 3/3: Start the frontend application
+$ cd ../../js
+$ npm install
+$ npm run start
+
+# ^ After launching this, open `http://localhost:8080` in your web browser
+```
+
+# Usage
+
+Shorelark contains a simple in-game introduction - just read what the terminal on the left side says and have fun!
+
+# License
+
+Copyright (c) 2020-2022, Patryk Wychowaniec <pwychowaniec@pm.me>.    
+Licensed under the MIT license.
