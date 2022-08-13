@@ -2,13 +2,11 @@
 
 A simulation of birds acquiring food across generations, enabled by neural networks and genetic algorithms:
 
-![screenshot](./readme/blackbird.png)
+![screenshot](./readme/blackbird.gif)
 
 The intent of this project was to learn about idiomatic Rust, the fundamentals of neural networks, and the concept of genetic algorithms. [Learning to Fly](https://pwy.io/en/posts/learning-to-fly-pt1), a tutorial created by Patryk Wychowaniec, details how this project was made.
 
 To garner a bit more hands-on experience than the tutorial, I implemented Rank Selection, K-Point Crossover, unit tests for both methods, and altered the overall style of the web page.  
-
-I described implementation details in the READMEs for each crate in libs/.
 
 # Building
 
