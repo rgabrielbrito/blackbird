@@ -1,4 +1,4 @@
-# 🐦‍⬛ Blackbird
+# ![bird](./readme/bird.png) Blackbird
 
 Simulation of evolution, powered by neural networks, genetic algorithms & high-school math:
 
