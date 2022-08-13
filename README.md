@@ -19,6 +19,9 @@ network avoids prematurely selecting one bird as the most fit bird for multiple 
 K-point crossover ensures that future birds retain similarities to their parent, without entirely duplicating how their parent behaved.
 Overall, it takes longer than the original implementation to converge, but it introduces more unique birds to the population.  
 
+# Prerequisites
+Before attempting to build the project, please install [Rust](https://www.rust-lang.org/tools/install), [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), and [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
+
 # Building
 
 ```bash
