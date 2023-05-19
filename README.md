@@ -47,7 +47,7 @@ Once the application is running, the Blackbird web page has a button to train th
 
 # License
 
-Copyright (c) 2020-2022, Patryk Wychowaniec <pwychowaniec@pm.me>.    
+Copyright (c) 2020-2023, Patryk Wychowaniec <pwychowaniec@pm.me>.    
 Licensed under the MIT license.
 
 # References
